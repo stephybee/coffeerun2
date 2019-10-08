@@ -33,18 +33,25 @@
 
   RemoteDataStore.prototype.remove = function(key) {
     var url = this.serverUrl;
-    $.ajax(this.serverUrl, {contentType: "application/javascript", type: "GET", success: function(serverResponse){
-      serverResponse.forEach(function(data){
-        console.log(data.id);
-        if(data.emailAddress === key){
-          try{
-            $.ajax(url + "/" + data.id, {type: "DELETE", success: console.log("Coffee delivered.")});
-          }catch(e){
-            console.log("Coffee delivery failed.");
+    $.ajax(this.serverUrl, {
+      contentType: "application/javascript",
+      type: "GET",
+      success: function(serverResponse) {
+        serverResponse.forEach(function(data) {
+          console.log(data.id);
+          if (data.emailAddress === key) {
+            try {
+              $.ajax(url + "/" + data.id, {
+                type: "DELETE",
+                success: console.log("Coffee delivered.")
+              });
+            } catch (e) {
+              console.log("Coffee delivery failed.");
+            }
           }
-        }
-      });
-    }});
+        });
+      }
+    });
   };
 
   App.RemoteDataStore = RemoteDataStore;
